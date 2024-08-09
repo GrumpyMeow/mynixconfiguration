@@ -3,14 +3,14 @@
 {
   imports = [ 
     <nixpkgs/nixos/modules/virtualisation/lxc-container.nix> 
-    ./qbittorrent.nix
-    ./printer.nix
-    ./zabbixagent.nix
-    ./pipewire.nix
-    ./pulseaudio-host.nix
-    ./plasma-desktop.nix
-    ./webbrowser.nix
-    ./nrf-wireshark.nix
+    ./nixdesktop/qbittorrent.nix
+    ./nixdesktop/printer.nix
+    ./nixdesktop/zabbixagent.nix
+    ./nixdesktop/pipewire.nix
+    ./nixdesktop/pulseaudio-host.nix
+    ./nixdesktop/plasma-desktop.nix
+    ./nixdesktop/webbrowser.nix
+    ./nixdesktop/nrf-wireshark.nix
   ];
 
   console.enable = true;
