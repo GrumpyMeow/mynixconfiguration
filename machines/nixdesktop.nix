@@ -1,23 +1,33 @@
 { config, pkgs, lib, ... }:
+let
+  vars = import ../vars.nix;
 
+in
 {
   imports = [ 
-    <nixpkgs/nixos/modules/virtualisation/lxc-container.nix> 
-    ./nixdesktop/qbittorrent.nix
-    ./nixdesktop/printer.nix
-    ./nixdesktop/zabbixagent.nix
-    ./nixdesktop/pipewire.nix
-    ./nixdesktop/pulseaudio-host.nix
-    ./nixdesktop/plasma-desktop.nix
-    ./nixdesktop/webbrowser.nix
-    ./nixdesktop/nrf-wireshark.nix
+    <nixpkgs/nixos/modules/virtualisation/proxmox-lxc.nix> 
+    ../modules/hardware/hp4100-printer.nix
+    ../modules/headless/zabbix-agent.nix
+    ../modules/headless/code-server.nix
+    ../modules/headless/pulseaudio-host.nix
+    ../modules/desktop/plasma-desktop.nix
+    ../modules/desktop/webbrowser.nix
+    ../modules/desktop/discord.nix
+    ../modules/desktop/printer-scanner.nix
+    ../modules/desktop/pipewire.nix
+#   ./nixdesktop/qbittorrent.nix
+#   ./nixdesktop/nrf-wireshark.nix
   ];
 
-  console.enable = true;
+  boot.isContainer = true;
+  boot.tmp.useTmpfs = true;
 
+  console.enable = true;
   systemd.services."getty@" = {
     unitConfig.ConditionPathExists = ["" "/dev/%I"];
   };
+
+  time.timeZone = vars.timezone;
 
   documentation = {
     enable = true;
@@ -74,8 +84,6 @@
       logRefusedConnections = true;
     };
   };
-
-  time.timeZone = "Europe/Amsterdam";
 
   i18n = {
     defaultLocale = "nl_NL.UTF-8";
@@ -143,24 +151,9 @@
     pkgs.traceroute
     pkgs.git
     pkgs.inetutils
-
-    pkgs.discord
     pkgs.git
     pkgs.gh
   ];  
 
   system.stateVersion = "24.05";
 }
-
-# 20240620 17:25 Pulseaudio not system-wide. Pulseaudio not connecting to host.
-# 20240620 17:50 Added nmap package
-# 20240620 18:30 Added NixOS Home Manager as module
-# 20240626 09:00 Modemmanager uitgecommentarieerd om 25sec wachten (zie log) te voorkomen
-# 20240626 09:01 Pipewire instellen, want foutmeldingen in logs
-
-# todo: Hacompanion instellen flake
-# todo: opensnitch opstarten en rules provisioning
-# todo: audiotube checken
-# todo: wireguard provisionen
-# todo: zabbix agent
-# todo: goldwarden i.p.v. bitwarden desktop?
