@@ -121,6 +121,7 @@ in
     pkgs.fatrace pkgs.iotop pkgs.inotify-tools
     pkgs.iperf
     pkgs.nixos-generators
+    pkgs.gh
   ];
 
   documentation.dev.enable = true;
