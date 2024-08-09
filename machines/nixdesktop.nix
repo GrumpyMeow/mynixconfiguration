@@ -74,7 +74,7 @@ in
     dhcpcd = {
       IPv6rs = false;
     };
-    hostName = "nixos";
+    hostName = "nixdesktop";
     enableIPv6 = false;
     networkmanager.enable = true;
     firewall = {

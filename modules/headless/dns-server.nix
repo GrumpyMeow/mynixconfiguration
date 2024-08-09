@@ -60,7 +60,7 @@ in
           ''"ap-beneden.${vars.domain}. A ${vars.subnetPrefixIP}.4"''
           ''"ap-zolder.${vars.domain}. A ${vars.subnetPrefixIP}.5"''
           ''"ap-keuken.${vars.domain}. A ${vars.subnetPrefixIP}.6"''
-          #''"pod1.${vars.domain}. A ${vars.subnetPrefixIP}.7"''
+          ''"nixdesktop.${vars.domain}. A ${vars.subnetPrefixIP}.7"''
           ''"${vars.zabbixServerHostName}.${vars.domain}. A ${vars.zabbixServerIP}"''
           ''"opnsense.${vars.domain}. A ${vars.subnetPrefixIP}.22"''
           ''"immich.${vars.domain} A ${vars.subnetPrefixIP}.23"''
