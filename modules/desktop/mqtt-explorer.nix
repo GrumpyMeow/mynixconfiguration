@@ -6,7 +6,7 @@ let
   unstableTarball =
     fetchTarball {
       url = "https://github.com/NixOS/nixpkgs/archive/nixos-unstable.tar.gz";
-      sha256 = "sha256:19nv90nr810mmckhg7qkzhjml9zgm5wk4idhrvyb63y4i74ih2i0";
+      sha256 = "sha256:0wjfikwmnk105bxwwxmkqcbf0nz5n7qp8f4z8lgwwlf3avf4jk1k";
     };
 
   vars = import ../../vars.nix;

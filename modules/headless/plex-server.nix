@@ -11,14 +11,7 @@ in
   environment.etc = {
       "Preferences.xml" = {
         text = ''<?xml version="1.0" encoding="utf-8"?>
-<Preferences OldestPreviousVersion="1.40.2.8395-c67dce28e" MachineIdentifier="${vars.plex.machineIdentifier}" \
-ProcessedMachineIdentifier="${vars.plex.processedMachineIdentifier}" AnonymousMachineIdentifier="${vars.plex.anonymousMachineIdentifier}" \
-MetricsEpoch="1" GlobalMusicVideoPathMigrated="1" AcceptedEULA="1" PublishServerOnPlexOnlineKey="0" \
-PlexOnlineToken="${vars.plex.online.token}" PlexOnlineUsername="${vars.plex.online.username}" PlexOnlineMail="${vars.plex.online.mail}" PlexOnlineHome="${vars.plex.online.home}" \
-DlnaEnabled="0" DvrIncrementalEpgLoader="0" CertificateUUID="${vars.plex.certificateUUID}" PubSubServerPing="82" \
-CertificateVersion="3" LastAutomaticMappedPort="0" logDebug="0" ScannerLowPriority="1" ScheduledLibraryUpdateInterval="86400" \
-EnableIPv6="0" RelayEnabled="0" WebHooksEnabled="0" allowedNetworks="${vars.plex.allowedNetworks}" customConnections="${vars.plex.customConnections}" \
-CinemaTrailersFromLibrary="0" CinemaTrailersIncludeEnglish="0" LanguageInCloud="1"/>
+<Preferences OldestPreviousVersion="1.40.2.8395-c67dce28e" MachineIdentifier="${vars.plex.machineIdentifier}" ProcessedMachineIdentifier="${vars.plex.processedMachineIdentifier}" AnonymousMachineIdentifier="${vars.plex.anonymousMachineIdentifier}" MetricsEpoch="1" GlobalMusicVideoPathMigrated="1" AcceptedEULA="1" PublishServerOnPlexOnlineKey="0" PlexOnlineToken="${vars.plex.online.token}" PlexOnlineUsername="${vars.plex.online.username}" PlexOnlineMail="${vars.plex.online.mail}" PlexOnlineHome="${vars.plex.online.home}" DlnaEnabled="0" DvrIncrementalEpgLoader="0" CertificateUUID="${vars.plex.certificateUUID}" PubSubServerPing="82" CertificateVersion="3" LastAutomaticMappedPort="0" logDebug="0" ScannerLowPriority="1" ScheduledLibraryUpdateInterval="86400" EnableIPv6="0" RelayEnabled="0" WebHooksEnabled="0" allowedNetworks="${vars.plex.allowedNetworks}" customConnections="${vars.plex.customConnections}" CinemaTrailersFromLibrary="0" CinemaTrailersIncludeEnglish="0" LanguageInCloud="1"/>
       '';
       };
   };

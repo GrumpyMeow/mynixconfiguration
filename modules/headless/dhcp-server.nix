@@ -144,7 +144,14 @@ in
               { hw-address = "40:a3:cc:ad:82:fc"; ip-address = "${vars.subnetPrefixIP}.87"; hostname = "chromebook-levi"; }
               { hw-address = "00:6b:9e:06:15:f7"; ip-address = "${vars.subnetPrefixIP}.88"; hostname = "e6510"; }
               { hw-address = "3c:21:9c:be:c4:2c"; ip-address = "${vars.subnetPrefixIP}.89"; hostname = "chromebook-zoe"; }
-              { hw-address = "e0:c2:64:34:91:ee"; ip-address = "${vars.subnetPrefixIP}.90"; hostname = "ONV411156"; }
+              { hw-address = "e0:c2:64:34:91:ee"; ip-address = "${vars.subnetPrefixIP}.90"; hostname = "ONV411156";
+                option-data = [
+                  {
+                    name = "routers";
+                    data = "192.168.1.1";
+                  }                  
+                ];
+              }
               { hw-address = "e0:70:ea:15:e2:5c"; ip-address = "${vars.subnetPrefixIP}.91"; hostname = "HP15E25C"; }
               { hw-address = "60:b6:06:33:9f:cf"; ip-address = "${vars.subnetPrefixIP}.92"; hostname = "soundbar-sander"; }
               # Other devices
