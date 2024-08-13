@@ -40,6 +40,8 @@ in
 
   time.timeZone = vars.timezone;
 
+  boot.kernel.sysctl."net.ipv6.conf.eth0.disable_ipv6" = true;
+
   services.resolved = {
     enable = false;
   };
