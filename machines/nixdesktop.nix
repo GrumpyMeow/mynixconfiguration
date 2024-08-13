@@ -149,7 +149,6 @@ in
     pkgs.dig # NSLookup etc.
     pkgs.nmap
     pkgs.traceroute
-    pkgs.git
     pkgs.inetutils
     pkgs.git
     pkgs.gh
