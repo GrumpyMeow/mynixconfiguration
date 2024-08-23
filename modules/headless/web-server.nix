@@ -6,6 +6,8 @@ let
   vars = import ../../vars.nix;
 in
 {  
+   users.users.nginx.extraGroups = [ "acme" ];
+
    security.acme = {
      acceptTerms = true;
      defaults = {
@@ -20,14 +22,38 @@ in
       enableDebugLogs = true;
      };
      certs."${vars.publicDomain}" = {
-       domain = vars.publicDomain;
-       extraDomainNames = [ "*.${vars.publicDomain}" ];
+       domain = "*.${vars.publicDomain}";
+       #domain = vars.publicDomain;
+       #extraDomainNames = [ "*.${vars.publicDomain}" ];
      };
    };
 
+  services.nginx = {
+    enable = true;
+    # recommendedTlsSettings = true;
+    # recommendedProxySettings = true;
+    # recommendedGzipSettings = true;
+    # recommendedOptimisation = true;
+    # clientMaxBodySize = "300m";
+    # logError = "stderr debug";
 
-   services.nginx = {
-     enable = true;
-   };
+    # # Only allow PFS-enabled ciphers with AES256
+    # sslCiphers = "AES256+EECDH:AES256+EDH:!aNULL";
+  };
+
+  networking.firewall.allowedTCPPorts = [80 443];
+
+  # catch-all
+  services.nginx.virtualHosts."_" = {
+    useACMEHost = vars.publicDomain;
+    forceSSL = true;
+    default = true;
+    locations."~ .*".return = "403";
+  };
+
+  # environment.persistence = {
+  #   "/persist".directories = ["/var/lib/acme"];
+  # };
+
 
 }

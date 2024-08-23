@@ -23,21 +23,22 @@ in
         interface = [ "127.0.0.1" vars.ip ];
         tls-system-cert = true;
         access-control = [
-          "0.0.0.0/0 refuse"
+          "0.0.0.0/0 allow"
           "127.0.0.0/8 allow"
           "${vars.subnet} allow"
+          "192.168.1.1/24 allow"
           "100.0.0.0/8 allow"
         ];
 
         prefer-ip6 = false;
 
-        private-domain = [ "local" vars.domain ];
+        private-domain = [ vars.domain ]; # "local"
         private-address = [
           vars.subnet
         ];
         unblock-lan-zones = true;
         insecure-lan-zones = true;       
-        #log-queries = true;
+        log-queries = false;
         cache-min-ttl = 3600;
         cache-max-ttl = 86400;
         prefetch = true;
@@ -47,11 +48,11 @@ in
         local-zone = [
          ''"${vars.domain}." static''
          ''"${vars.publicDomain}." static''
-         ''"local." static''
+         #''"local." static''
         ];
         local-data = [
           ''"${vars.domain}. IN A ${vars.ip}"''
-          ''"local. A ${vars.ip}"''
+          #''"local. A ${vars.ip}"''
           # .lan & .local (used for uptime pinging)
           ''"${vars.hostName}.${vars.domain}. A ${vars.ip}"''
           ''"${vars.mqttServerHostName}.${vars.domain}. A ${vars.ip}"''
@@ -84,21 +85,22 @@ in
           ''"nachtlamp-sander.${vars.domain}. A ${vars.subnetPrefixIP}.50"''
           ''"voortuinlamp.${vars.domain}. A ${vars.subnetPrefixIP}.52"''
           ''"echo1.${vars.domain}. A ${vars.subnetPrefixIP}.54"''
+          ''"floodlight.${vars.domain}. A ${vars.subnetPrefixIP}.55"''
           # *.933k.nl
           ''"zabbix.${vars.publicDomain}. A ${vars.reverseProxyIP}"''
-          ''"vaultwarden.${vars.publicDomain}. A ${vars.reverseProxyIP}"''
+          ''"vaultwarden.${vars.publicDomain}. A ${vars.reverseProxyIP2}"''
           ''"immich.${vars.publicDomain}. A ${vars.reverseProxyIP}"''
-          ''"trilium.${vars.publicDomain}. A ${vars.reverseProxyIP}"''
+          ''"trilium.${vars.publicDomain}. A ${vars.reverseProxyIP2}"''
           ''"proxmox.${vars.publicDomain}. A ${vars.reverseProxyIP}"''
-          ''"frigate.${vars.publicDomain}. A ${vars.reverseProxyIP}"''
-          ''"plex.${vars.publicDomain}. A ${vars.reverseProxyIP}"''
+          ''"frigate.${vars.publicDomain}. A ${vars.reverseProxyIP2}"''
+          ''"plex.${vars.publicDomain}. A ${vars.reverseProxyIP2}"''
           ''"torrent.${vars.publicDomain}. A ${vars.reverseProxyIP}"''
           ''"mail.${vars.publicDomain}. A ${vars.subnetPrefixIP}.97"''
           ''"opnsense.${vars.publicDomain}. A ${vars.reverseProxyIP}"''
           ''"router.${vars.publicDomain}. A ${vars.reverseProxyIP}"''
           ''"pve2.${vars.publicDomain}. A ${vars.reverseProxyIP}"''
-          ''"esphome.${vars.publicDomain}. A ${vars.reverseProxyIP}"''
-          ''"zigbee2mqtt.${vars.publicDomain}. A ${vars.reverseProxyIP}"''
+          ''"esphome.${vars.publicDomain}. A ${vars.reverseProxyIP2}"''
+          ''"zigbee2mqtt.${vars.publicDomain}. A ${vars.reverseProxyIP2}"''
           ''"ntopng.${vars.publicDomain}. A ${vars.reverseProxyIP}"''
           ''"${vars.publicDomain}. A ${vars.reverseProxyIP}"''
           ''"*.${vars.publicDomain}. A ${vars.reverseProxyIP}"''

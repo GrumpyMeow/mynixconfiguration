@@ -20,6 +20,7 @@ in
     ../modules/headless/ebusd.nix
     ../modules/headless/zigbee2mqtt.nix
     ../modules/headless/ntp-server.nix
+    #../modules/headless/rtlsdr.nix    
     #./modules/headless/ntopng-server.nix
     #./modules/headless/mail-server.nix
     #./modules/headless/mqtt-explorer.nix
@@ -40,18 +41,29 @@ in
 
   time.timeZone = vars.timezone;
 
-  boot.kernel.sysctl."net.ipv6.conf.eth0.disable_ipv6" = true;
+  #boot.kernel.sysctl."net.ipv6.conf.eth0.disable_ipv6" = true;
 
   services.resolved = {
     enable = false;
   };
 
+
   networking = {
     hostName = vars.hostName;
     domain = vars.domain;
+    search = [ "lan" ];
     defaultGateway = {
       address = vars.gateway;
       interface = "eth0";
+    };
+    
+    resolvconf = {
+      enable = true;
+      extraConfig = ''
+        search_domains_append="lan"
+        prepend_nameservers="192.168.178.1"
+        name_servers_append="192.168.1.1"
+        '';
     };
     
     nameservers = [ vars.upstreamDNS ];
@@ -70,7 +82,7 @@ in
     };
 
     nat.enable = false;
-    enableIPv6 = false;
+    #enableIPv6 = false;
 
     useDHCP = false;
     hosts = {

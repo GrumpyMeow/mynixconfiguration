@@ -6,8 +6,9 @@ let
    unstableTarball =
     fetchTarball {
       url = "https://github.com/NixOS/nixpkgs/archive/nixos-unstable.tar.gz";
-      sha256 = "sha256:0gnmmn1wc09z1q4bb8jkqi2f8vxl26kaa3xrs664q9i651am2mkl";
+      sha256 = "sha256:1vc8bzz04ni7l15a9yd1x7jn0bw2b6rszg1krp6bcxyj3910pwb7";
     };
+  vars = import ../../vars.nix;
 in
 {
   networking.firewall = {
@@ -32,5 +33,29 @@ in
     address = "0.0.0.0";
     package = pkgs.unstable.esphome;
   };
+
+  services.nginx = {
+    enable = true;
+
+    virtualHosts = {
+      "esphome" = {
+        useACMEHost = vars.publicDomain;
+        http2 = true;
+        serverName = "esphome.${vars.publicDomain}";
+        forceSSL = true;
+        extraConfig = ''
+          send_timeout 100m;
+          proxy_redirect off;
+          proxy_buffering off;
+        '';        
+        locations."/" = {
+          proxyPass = "http://127.0.0.1:6052";
+          proxyWebsockets = true;
+        };
+      };
+
+    };
+  };
+
 
 }

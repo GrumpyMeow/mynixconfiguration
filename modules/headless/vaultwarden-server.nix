@@ -60,4 +60,28 @@ in
       LOG_LEVEL = "warn";
     };
   };
+
+  services.nginx = {
+    enable = true;
+
+    virtualHosts = {
+      "vaultwarden" = {
+        useACMEHost = vars.publicDomain;
+        http2 = true;
+        serverName = "vaultwarden.${vars.publicDomain}";
+        forceSSL = true;
+        extraConfig = ''
+          send_timeout 100m;
+          proxy_redirect off;
+          proxy_buffering off;
+        '';        
+        locations."/" = {
+          proxyPass = "http://127.0.0.1:8222";
+          proxyWebsockets = true;
+        };
+      };
+
+    };
+  };
+
 }

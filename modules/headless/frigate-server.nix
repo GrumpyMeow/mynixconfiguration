@@ -330,13 +330,33 @@ in
     };
   };
 
-#  security.acme.certs."nvr.${vars.publicDomain}".email = "acme@${vars.publicDomain}";
+  services.nginx = {
+    enable = true;
 
-  services.nginx.virtualHosts."frigate" = {
-#      serverName = "nvr.${vars.publicDomain}";
-      forceSSL = false;
-      enableACME = false;
-      listen = [{port = 5000;  addr="0.0.0.0"; ssl = false;}];
+    virtualHosts = {
+      "frigate_" = {
+        useACMEHost = vars.publicDomain;
+        http2 = true;
+        serverName = "frigate.${vars.publicDomain}";
+        forceSSL = true;
+        extraConfig = ''
+          send_timeout 100m;
+          proxy_redirect off;
+          proxy_buffering off;
+        '';        
+        locations."/" = {
+          proxyPass = "http://127.0.0.1:5000";
+          proxyWebsockets = true;
+        };
+      };
+
+      "frigate" = {       
+        http2 = true;
+        forceSSL = false;
+        enableACME = false;
+        listen = [{port = 5000;  addr="0.0.0.0"; ssl = false;}];
+      };
+    };
   };
 
 }

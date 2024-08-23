@@ -8,10 +8,10 @@ in
 {  
    services = {
 
-    avahi = {
-      enable = true;
-      nssmdns4 = true;
-    };
+    # avahi = {
+    #   enable = true;
+    #   nssmdns4 = true;
+    # };
 
     printing = {
       enable = true;

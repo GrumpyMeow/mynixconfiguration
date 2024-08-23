@@ -2,12 +2,14 @@
 with lib;
 let
     vars = import ../../vars.nix;
+    managementApiPort = 8000;
 in
 {
   networking.firewall = {
     checkReversePath = "loose";
     interfaces.eth0 = {
       allowedUDPPorts = [ 67 ];
+      allowedTCPPorts = [ managementApiPort ]; # Allow access to kea api
     };
   };
 
@@ -17,6 +19,7 @@ in
     dhcp4 = {
       enable = true;
       settings = {
+        ip-reservations-unique = false; # Allow multiple mac addresses to reserve the same ip (wired/wireless)
 
         control-socket = {
           socket-name = "/run/kea/kea-dhcp4.socket";
@@ -34,7 +37,7 @@ in
           lfc-interval = 86400;
         };
 
-        authoritative = true;
+        #authoritative = true;
         #rebind-timer = 2000;
         #renew-timer = 1000;
         valid-lifetime = 86400;
@@ -45,24 +48,24 @@ in
           {
             name = "domain-name-servers";
             data = vars.ip;
-            always-send = true;
+            #always-send = true;
           }
-          {
-            name = "routers";
-            data = vars.gateway;
-          }
-          {
-            name = "domain-name";
-            data = vars.domain;
-          }
-          {
-            name = "broadcast-address";
-            data = "${vars.subnetPrefixIP}.255";
-          }
-          {
-            name = "time-servers";
-            data = vars.timeServerIP;    
-          }
+          # {
+          #   name = "routers";
+          #   data = vars.gateway;
+          # }
+          # {
+          #   name = "domain-name";
+          #   data = vars.domain;
+          # }
+          # {
+          #   name = "broadcast-address";
+          #   data = "${vars.subnetPrefixIP}.255";
+          # }
+          # {
+          #   name = "time-servers";
+          #   data = vars.timeServerIP;    
+          # }
         ];
         loggers = [
           {
@@ -79,7 +82,13 @@ in
           {
             pools = [ { pool = "${vars.subnetPrefixIP}.1 - ${vars.subnetPrefixIP}.199"; } ];
             subnet = vars.subnet;
-            id = 1;
+            #id = 1;
+            option-data = [
+              {
+                name = "routers";
+                data = vars.gateway;
+              }
+            ];
             reservations = [
               # Infrastructure devices
               { hw-address = "BC:24:22:8B:6C:22"; ip-address = "${vars.subnetPrefixIP}.1"; hostname = "nixserver"; }
@@ -88,8 +97,7 @@ in
               { hw-address = "d4:1a:d1:18:6b:fc"; ip-address = "${vars.subnetPrefixIP}.4"; hostname = "ap-beneden"; }
               { hw-address = "d4:1a:d1:18:87:78"; ip-address = "${vars.subnetPrefixIP}.5"; hostname = "ap-zolder"; }
               { hw-address = "d4:1a:d1:18:87:74"; ip-address = "${vars.subnetPrefixIP}.6"; hostname = "ap-keuken"; }
-              { hw-address = "BC:24:11:8B:6C:16"; ip-address = "${vars.subnetPrefixIP}.7"; hostname = "nixdesktop"; }
-              
+              { hw-address = "BC:24:11:8B:6C:16"; ip-address = "${vars.subnetPrefixIP}.7"; hostname = "nixdesktop"; }              
               # Virtual servers
               { hw-address = "a2:8f:9e:1a:a9:e0"; ip-address = "${vars.subnetPrefixIP}.9"; hostname = "hass"; }
               { hw-address = "bc:24:11:6f:d2:6d"; ip-address = "${vars.subnetPrefixIP}.10"; hostname = "zabbix"; }
@@ -139,28 +147,87 @@ in
               { hw-address = "f8:e5:ce:6c:ae:fd"; ip-address = "${vars.subnetPrefixIP}.82"; hostname = "iphonetanya"; }
               { hw-address = "e4:b2:fb:4c:be:6d"; ip-address = "${vars.subnetPrefixIP}.83"; hostname = "iphonelevi"; }
               { hw-address = "5c:91:75:af:77:61"; ip-address = "${vars.subnetPrefixIP}.84"; hostname = "ipadzoe"; } # nieuwe ipad
-              { hw-address = "f4:4e:e3:aa:50:78"; ip-address = "${vars.subnetPrefixIP}.85"; hostname = "hp850g7"; }
+              { hw-address = "f4:4e:e3:aa:50:78"; ip-address = "${vars.subnetPrefixIP}.85"; hostname = "hp850g7"; } # wireless
+              { client-id = "00:68:70:38:35:30:67:37"; ip-address = "${vars.subnetPrefixIP}.94"; hostname = "hp850g7lan"; } # wired via monitor
               { hw-address = "e8:da:20:54:a8:a9"; ip-address = "${vars.subnetPrefixIP}.86"; hostname = "switch"; }
               { hw-address = "40:a3:cc:ad:82:fc"; ip-address = "${vars.subnetPrefixIP}.87"; hostname = "chromebook-levi"; }
               { hw-address = "00:6b:9e:06:15:f7"; ip-address = "${vars.subnetPrefixIP}.88"; hostname = "e6510"; }
               { hw-address = "3c:21:9c:be:c4:2c"; ip-address = "${vars.subnetPrefixIP}.89"; hostname = "chromebook-zoe"; }
-              { hw-address = "e0:c2:64:34:91:ee"; ip-address = "${vars.subnetPrefixIP}.90"; hostname = "ONV411156";
-                option-data = [
-                  {
-                    name = "routers";
-                    data = "192.168.1.1";
-                  }                  
-                ];
-              }
+              { hw-address = "e0:c2:64:34:91:ee"; ip-address = "${vars.subnetPrefixIP}.90"; hostname = "ONV411156"; } # wireless
+              { client-id = "01:a8:4a:63:e4:2b:8d"; ip-address = "${vars.subnetPrefixIP}.90"; hostname = "ONV411156"; } # wired via monitor 
               { hw-address = "e0:70:ea:15:e2:5c"; ip-address = "${vars.subnetPrefixIP}.91"; hostname = "HP15E25C"; }
               { hw-address = "60:b6:06:33:9f:cf"; ip-address = "${vars.subnetPrefixIP}.92"; hostname = "soundbar-sander"; }
               # Other devices
               { hw-address = "bc:24:11:17:32:65"; ip-address = "${vars.subnetPrefixIP}.93"; hostname = "wyomingsatellite"; }
               { hw-address = "bc:24:11:f9:9b:d2"; ip-address = "${vars.subnetPrefixIP}.97"; hostname = "mail"; }
-              # 
             ];
           }
         ];
+      };
+    };
+
+    dhcp6 = {
+      enable = false;
+      settings = {
+
+        control-socket = {
+          socket-name = "/run/kea/kea-dhcp6.socket";
+          socket-type = "unix";
+        };
+
+        interfaces-config = {
+          interfaces = [ "eth0" ];
+        };
+
+        lease-database = {
+          name = "/var/lib/kea/dhcp6.leases";
+          persist = true;
+          type = "memfile";
+          lfc-interval = 86400;
+        };
+
+        #rebind-timer = 2000;
+        #renew-timer = 1000;
+        valid-lifetime = 86400;
+        cache-threshold = 0.5;
+        cache-max-age = 600;
+
+        option-data = [
+          {
+            name = "domain-name-servers";
+            data = "2001:730:3e42:1000::53";
+            always-send = true;
+          }
+          {
+            name = "routers";
+            data = "fe80::201:5cff:feb5:f846";
+          }
+          {
+            name = "domain-name";
+            data = vars.domain;
+          }          
+        ];
+        loggers = [
+          {
+            name = "kea-dhcp6";
+            severity = "INFO";
+            output_options = [
+              {
+                output = "stdout";
+              }
+            ];
+          }          
+        ];
+        subnet6 = [
+          {
+            subnet = "2001:db8::/64";
+            pools = [
+                { pool = "2001:db8::100 - 2001:db8::ffff"; }
+            ];
+            id = 1024;
+          }
+        ];
+
       };
     };
   };
@@ -168,13 +235,23 @@ in
   services.kea.ctrl-agent = {
     enable = true;
     settings = {
+      http-host = "0.0.0.0"; 
+      http-port = managementApiPort; # Management API port
       control-sockets = {
         dhcp4 = {
           socket-type = "unix";
           socket-name = "/run/kea/kea-dhcp4.socket";
+        };
+        dhcp6 = {
+          socket-type = "unix";
+          socket-name = "/run/kea/kea-dhcp6.socket";
         };
       };
     };
   };
 
 }
+
+# 01:80:e5:40:0d:91:39
+# 00:68:70:38:35:30:67:37
+# hw-address = "a8:4a:63:e4:2b:8d"; monitor mac address

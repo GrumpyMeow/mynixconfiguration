@@ -222,4 +222,26 @@ in
     };    
   };
 
+  services.nginx = {
+    enable = true;
+
+    virtualHosts = {
+      "zigbee2mqtt" = {
+        useACMEHost = vars.publicDomain;
+        http2 = true;
+        serverName = "zigbee2mqtt.${vars.publicDomain}";
+        forceSSL = true;
+        extraConfig = ''
+          send_timeout 100m;
+          proxy_redirect off;
+          proxy_buffering off;
+        '';        
+        locations."/" = {
+          proxyPass = "http://127.0.0.1:8099";
+          proxyWebsockets = true;
+        };
+      };
+
+    };
+  };
 }
