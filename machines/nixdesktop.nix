@@ -1,7 +1,10 @@
 { config, pkgs, lib, ... }:
 
 {
-  imports = [ <nixpkgs/nixos/modules/virtualisation/lxc-container.nix> ];
+  imports = [ 
+    <nixpkgs/nixos/modules/virtualisation/lxc-container.nix> 
+    /root/mynixconfiguration/modules/headless/code-server.nix
+  ];
 
   console.enable = true;
 
