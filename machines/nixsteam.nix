@@ -3,7 +3,11 @@
 {
   imports = [ 
     <nixpkgs/nixos/modules/virtualisation/lxc-container.nix> 
+    ../modules/desktop/plasma-desktop.nix
+    ../modules/desktop/webbrowser.nix
   ];
+
+  time.timeZone = "Europe/Amsterdam";
 
   console.enable = true;
 
@@ -33,20 +37,7 @@
   services.displayManager.enable = true;
   services.displayManager.sddm.enable = true;
   services.displayManager.sddm.wayland.enable = true;
-  
-  programs.chromium.enable = true;
-  programs.chromium.homepageLocation = "https://933k.nl:8123";
-  programs.chromium.extraOpts = { 
-    "BrowserSignin" = 0;
-    "SyncDisabled" = true;
-    "PasswordManagerEnabled" = false;
-    "SpellcheckEnabled" = true;
-    "SpellcheckLanguage" = [
-      "nl"
-      "en-US"
-    ];
-  };
-  
+    
   users.users.system = {
     isNormalUser = true;
     home = "/home/system";
@@ -55,13 +46,6 @@
     shell = pkgs.bash;
   };
   
-  services.displayManager.sddm.settings = {
-    Autologin = {
-      Session = "plasma.desktop";
-      User = "system";
-    };
-  };
-
   programs.steam = {
     enable=true;
   }; 
@@ -98,14 +82,9 @@
   };
    
   environment.systemPackages = with pkgs; [
-    pkgs.chromium
-    pkgs.vscode
-    pkgs.trilium-desktop
-    pkgs.bitwarden
     pkgs.git
     pkgs.gh
-    pkgs.xdg-utils
   ];  
   
-  system.stateVersion = "24.05";
+  system.stateVersion = "24.11";
 }
