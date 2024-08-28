@@ -67,30 +67,30 @@
   services.pipewire.audio.enable = true;
 
 
-  powerManagement.enable = lib.mkForce false;
-  services.accounts-daemon.enable = lib.mkForce false;
-  systemd.services.powerdevil = {
-    wantedBy = lib.mkForce [];
-    enable = false;
-  };
+#  powerManagement.enable = lib.mkForce false;
+#  services.accounts-daemon.enable = lib.mkForce false;
+#  systemd.services.powerdevil = {
+#    wantedBy = lib.mkForce [];
+#    enable = false;
+#  };
 
-  systemd.services.systemd-rfkill = {
-    wantedBy = lib.mkForce [];
-    enable = false;
-  };
+#  systemd.services.systemd-rfkill = {
+#    wantedBy = lib.mkForce [];
+#    enable = false;
+#  };
 
-  services.udisks2.enable = lib.mkForce false;
-  systemd.services.udisks2 = {
-    enable = false;
-    wantedBy = lib.mkForce [];
-  };
+#  services.udisks2.enable = lib.mkForce false;
+#  systemd.services.udisks2 = {
+#    enable = false;
+#    wantedBy = lib.mkForce [];
+#  };
    
   environment.systemPackages = with pkgs; [
     pkgs.git
     pkgs.gh
   ];  
 
-  hardware.graphics = {
+  hardware.opengl = {
     ## radv: an open-source Vulkan driver from freedesktop
 #    driSupport = true;
     driSupport32Bit = true;
