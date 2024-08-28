@@ -1,8 +1,6 @@
 { config, pkgs, lib, ... }:
 
 {
-  nix.nixPath = [ "nixos-config=/home/system/mynixconfiguration/machines/nixsteam.nix" ];
-
   imports = [ 
     <nixpkgs/nixos/modules/virtualisation/lxc-container.nix> 
     ../modules/desktop/plasma-desktop.nix
@@ -25,6 +23,12 @@
     auto-optimise-store = true;
     sandbox = false;
   };
+
+  nix.nixPath = [
+    "nixpkgs=/nix/var/nix/profiles/per-user/root/channels/nixos"
+    "nixos-config=/home/system/mynixconfiguration/machines/nixsteam.nix"
+    "/nix/var/nix/profiles/per-user/root/channels"
+  ];
   
   system.autoUpgrade= {
     enable = true;
