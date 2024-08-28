@@ -25,7 +25,7 @@
   };
   
   system.autoUpgrade= {
-    enable = true;
+    enable = false; # Auto-upgrade uses the /etc/nixos/config file 
     allowReboot = true;
   };
   
@@ -47,7 +47,10 @@
   };
   
   programs.steam = {
-    enable=true;
+    enable = true;
+    remotePlay.openFirewall = true;
+    dedicatedServer.openFirewall = true;
+    localNetworkGameTransfers.openFirewall = true;
   }; 
 
   services.pipewire.enable = true;
@@ -64,10 +67,10 @@
   services.pipewire.audio.enable = true;
 
 
+  powerManagement.enable = lib.mkForce false;
   services.accounts-daemon.enable = lib.mkForce false;
   systemd.services.powerdevil = {
     wantedBy = lib.mkForce [];
-
     enable = false;
   };
 
@@ -76,6 +79,7 @@
     enable = false;
   };
 
+  services.udisks2.enable = lib.mkForce false;
   systemd.services.udisks2 = {
     enable = false;
     wantedBy = lib.mkForce [];
@@ -85,6 +89,32 @@
     pkgs.git
     pkgs.gh
   ];  
-  
+
+  hardware.opengl = {
+    ## radv: an open-source Vulkan driver from freedesktop
+#    driSupport = true;
+    driSupport32Bit = true;
+
+    ## amdvlk: an open-source Vulkan driver from AMD
+    extraPackages = [ pkgs.amdvlk ];
+    extraPackages32 = [ pkgs.driversi686Linux.amdvlk ];
+  };
+
   system.stateVersion = "24.11";
 }
+
+# Disable System Tray widgets
+# Bottom-right, expand "Status and Notifications" panel, click "Configure System Tray".
+# Disable: "Brightness and Color"
+# Disable: "Disks & Devices"
+# Disable: "Camera Indicator"
+# Disable: "Power and Battery"
+
+# Disable Screen locking
+# System Settings > Screen locking > Lock screen automatically = Never
+
+# Audio via 2nd HDMI port
+# Select Profile "Pro Audio". Also "Pro Audio" for the other playback devices. Select "Playback Device" which displays "Philips Soundbar" as popup.
+
+# Blinking screen during game-play, monitor loses sync
+# Display Configuration, Select "Never" for "Adaptive Sync"
