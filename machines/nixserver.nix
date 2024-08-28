@@ -3,7 +3,13 @@ let
     vars = import ../vars.nix;
 in
 { 
-  nix.nixPath = [ "nixos-config=/root/mynixconfiguration/machines/nixserver.nix" ];
+
+  nix.nixPath = [
+    "nixpkgs=/nix/var/nix/profiles/per-user/root/channels/nixos"
+    "nixos-config=/root/mynixconfiguration/machines/nixserver.nix"
+    "/root/.nix-defexpr/channels"
+    "/nix/var/nix/profiles/per-user/root/channels"
+  ];
 
   imports = [ 
     <nixpkgs/nixos/modules/virtualisation/proxmox-lxc.nix> 
