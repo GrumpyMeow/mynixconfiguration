@@ -97,7 +97,8 @@ in
               { hw-address = "d4:1a:d1:18:6b:fc"; ip-address = "${vars.subnetPrefixIP}.4"; hostname = "ap-beneden"; }
               { hw-address = "d4:1a:d1:18:87:78"; ip-address = "${vars.subnetPrefixIP}.5"; hostname = "ap-zolder"; }
               { hw-address = "d4:1a:d1:18:87:74"; ip-address = "${vars.subnetPrefixIP}.6"; hostname = "ap-keuken"; }
-              { hw-address = "BC:24:11:8B:6C:16"; ip-address = "${vars.subnetPrefixIP}.7"; hostname = "nixdesktop"; }              
+              { hw-address = "BC:24:11:8B:6C:16"; ip-address = "${vars.subnetPrefixIP}.7"; hostname = "nixsteam"; }
+              #{ hw-address = "BC:24:11:8B:6C:16"; ip-address = "${vars.subnetPrefixIP}.8"; hostname = "nixdesktop"; }
               # Virtual servers
               { hw-address = "a2:8f:9e:1a:a9:e0"; ip-address = "${vars.subnetPrefixIP}.9"; hostname = "hass"; }
               { hw-address = "bc:24:11:6f:d2:6d"; ip-address = "${vars.subnetPrefixIP}.10"; hostname = "zabbix"; }

@@ -5,7 +5,7 @@
     <nixpkgs/nixos/modules/virtualisation/lxc-container.nix> 
     ../modules/desktop/plasma-desktop.nix
     ../modules/desktop/webbrowser.nix
-    ../modules/headless/zabbix-agent.nix
+    #../modules/headless/zabbix-agent.nix
     ../modules/headless/code-server.nix
     ../modules/desktop/steam.nix
   ];
