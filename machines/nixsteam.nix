@@ -1,6 +1,8 @@
 { config, pkgs, lib, ... }:
 
 {
+  nix.nixPath = [ "nixos-config=/home/system/mynixconfiguration/machines/nixsteam.nix" ];
+
   imports = [ 
     <nixpkgs/nixos/modules/virtualisation/lxc-container.nix> 
     ../modules/desktop/plasma-desktop.nix
@@ -25,11 +27,12 @@
   };
   
   system.autoUpgrade= {
-    enable = false; # Auto-upgrade uses the /etc/nixos/config file 
+    enable = true;
     allowReboot = true;
   };
   
   networking.enableIPv6 = false;
+  networking.hostName = "nixsteam";
     
   services.desktopManager.plasma6.enable = true;
   services.xserver.enable = false;

@@ -1,6 +1,8 @@
 { config, pkgs, lib, ... }:
 
 {
+  nix.nixPath = [ "nixos-config=/root/mynixconfiguration/machines/nixdesktop.nix" ];
+
   imports = [ 
     <nixpkgs/nixos/modules/virtualisation/lxc-container.nix> 
     /root/mynixconfiguration/modules/headless/code-server.nix

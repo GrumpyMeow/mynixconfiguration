@@ -3,6 +3,8 @@ let
     vars = import ../vars.nix;
 in
 { 
+  nix.nixPath = [ "nixos-config=/root/mynixconfiguration/machines/nixserver.nix" ];
+
   imports = [ 
     <nixpkgs/nixos/modules/virtualisation/proxmox-lxc.nix> 
     ../modules/headless/dhcp-server.nix
