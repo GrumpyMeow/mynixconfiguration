@@ -5,6 +5,9 @@
     <nixpkgs/nixos/modules/virtualisation/lxc-container.nix> 
     ../modules/desktop/plasma-desktop.nix
     ../modules/desktop/webbrowser.nix
+    ../modules/headless/zabbix-agent.nix
+    ../modules/headless/code-server.nix
+    ../modules/desktop/steam.nix
   ];
 
   time.timeZone = "Europe/Amsterdam";
@@ -53,13 +56,6 @@
     shell = pkgs.bash;
   };
   
-  programs.steam = {
-    enable = true;
-    remotePlay.openFirewall = true;
-    dedicatedServer.openFirewall = true;
-    localNetworkGameTransfers.openFirewall = true;
-  }; 
-
   services.pipewire.enable = true;
 
 #  environment.sessionVariables = rec {
@@ -96,16 +92,6 @@
     pkgs.git
     pkgs.gh
   ];  
-
-  hardware.opengl = {
-    ## radv: an open-source Vulkan driver from freedesktop
-#    driSupport = true;
-    driSupport32Bit = true;
-
-    ## amdvlk: an open-source Vulkan driver from AMD
-    extraPackages = [ pkgs.amdvlk ];
-    extraPackages32 = [ pkgs.driversi686Linux.amdvlk ];
-  };
 
   system.stateVersion = "24.11";
 }
