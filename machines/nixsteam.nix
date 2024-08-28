@@ -90,7 +90,7 @@
     pkgs.gh
   ];  
 
-  hardware.opengl = {
+  hardware.graphics = {
     ## radv: an open-source Vulkan driver from freedesktop
 #    driSupport = true;
     driSupport32Bit = true;
