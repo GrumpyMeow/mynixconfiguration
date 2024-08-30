@@ -27,7 +27,7 @@ in
     server = vars.zabbixServerIP;
     openFirewall = true;
     settings = {
-      Hostname = "${vars.hostName}.${vars.domain}";
+      Hostname = "${config.networking.hostName}.${vars.domain}";
       ServerActive = vars.zabbixServerIP;
       AllowKey = "system.run[*]";
       #AllowRoot = 1;
