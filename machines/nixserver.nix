@@ -90,7 +90,7 @@ in
     };
 
     nat.enable = false;
-    #enableIPv6 = false;
+    enableIPv6 = false;
 
     useDHCP = false;
     hosts = {
