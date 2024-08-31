@@ -9,6 +9,8 @@
     ../modules/headless/code-server.nix
     ../modules/desktop/steam.nix
     ../modules/desktop/iptv.nix
+    ../modules/hardware/hp4100-printer.nix    
+    ../modules/desktop/printer-scanner.nix
   ];
 
   time.timeZone = "Europe/Amsterdam";
