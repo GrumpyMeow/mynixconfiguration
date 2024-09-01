@@ -22,7 +22,7 @@ in
     pkgs.kdePackages.khelpcenter
     pkgs.kdePackages.kwalletmanager
     pkgs.kdePackages.kwallet
-    pkgs.kdePackages.kinfocenter
+    #pkgs.kdePackages.kinfocenter
   ];
 
   services.displayManager.enable = true;
@@ -37,7 +37,7 @@ in
     };
   };
 
-  hardware.graphics = {
+  hardware.opengl = {
     enable = true;
 
     ## amdvlk: an open-source Vulkan driver from AMD
@@ -65,6 +65,12 @@ in
     #pkgs.ledger-live-desktop
     #pkgs.gimp
     #pkgs.mqttx
+
+    # Packages needed for Info Center tool
+    pkgs.pciutils
+    pkgs.clinfo
+    pkgs.gpu-viewer
+    pkgs.wayland-utils
   ];  
   
 
