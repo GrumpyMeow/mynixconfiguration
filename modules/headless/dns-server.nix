@@ -69,6 +69,7 @@ in
           ''"pve2.${vars.domain} A ${vars.subnetPrefixIP}.77"''
           ''"camvoortuin.${vars.domain}. A ${vars.subnetPrefixIP}.78"''
           ''"schuurdeurlamp.${vars.domain}. A ${vars.subnetPrefixIP}.79"''
+          ''"e6510.${vars.domain} A ${vars.subnetPrefixIP}.88"''
           ''"HP15E25C.${vars.domain}. A ${vars.subnetPrefixIP}.91"''
           ''"soundbar-sander.${vars.domain} A ${vars.subnetPrefixIP}.92"''
           # ESPHome
