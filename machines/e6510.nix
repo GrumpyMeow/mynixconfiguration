@@ -1,18 +1,34 @@
 { config, pkgs, ... }:
-
+let
+  vars = import ../vars.nix;
+in
 {
   nix.nixPath = [
     "nixpkgs=/nix/var/nix/profiles/per-user/root/channels/nixos"
     "nixos-config=/home/sander/mynixconfiguration/machines/e6510.nix"
     "/nix/var/nix/profiles/per-user/root/channels"
-    "/home/sander/.nix-defexpr/channels"
+#    "/home/sander/.nix-defexpr/channels"
   ];
 
 
   imports =
     [ 
       ./e6510/hardware-configuration.nix
+      ../modules/headless/zabbix-agent.nix
+      ../modules/hardware/hp4100-printer.nix    
+      ../modules/desktop/printer-scanner.nix
     ];
+
+  zabbixAgent.hostName = "e6510.${vars.domain}"; 
+
+  nixpkgs = {
+    config = {
+      allowUnfree = true;
+      packageOverrides = pkgs: {
+        unstable = import (fetchTarball "https://github.com/NixOS/nixpkgs/archive/nixos-unstable.tar.gz") {};
+      };
+    };
+  };
 
   # Use the GRUB 2 boot loader.
   boot.loader.grub.enable = true;
@@ -28,7 +44,7 @@
   networking.networkmanager.enable = true;  # Easiest to use and most distros use this by default.
 
   # Set your time zone.
-  time.timeZone = "Europe/Amsterdam";
+  time.timeZone = vars.timezone;
 
   # Select internationalisation properties.
   i18n.defaultLocale = "nl_NL.UTF-8";
@@ -39,10 +55,11 @@
   };
 
   # Enable the X11 windowing system.
-  services.xserver.enable = true;
+  services.xserver.enable = false;
   services.displayManager.sddm.enable = true;
+  services.displayManager.sddm.wayland.enable = true;
   #services.xserver.displayManager.auto.user = "sander";
-  services.xserver.desktopManager.plasma5.enable = true;
+  services.desktopManager.plasma6.enable = true;
   #services.xserver.desktopManager.default = "plasma5";
   services.xserver.videoDrivers = [
     "amdgpu"
@@ -61,8 +78,6 @@
     nssmdns4 = true;
     openFirewall = true;
   };
-
-  # Todo: Add printer 
 
   # Enable sound.
   hardware.pulseaudio.enable = true;
@@ -170,7 +185,7 @@
     };
   };
 
-  nixpkgs.config.allowUnfree = true;
+#  nixpkgs.config.allowUnfree = true;
 
   hardware.bluetooth.enable = true;
   hardware.bluetooth.powerOnBoot = false;
