@@ -1,5 +1,7 @@
 { config, pkgs, lib, ... }:
-
+let
+    vars = import ../vars.nix;
+in
 {
   imports = [ 
     <nixpkgs/nixos/modules/virtualisation/lxc-container.nix> 
@@ -15,7 +17,16 @@
 
   zabbixAgent.hostName = "nixsteam.${vars.domain}";
 
-  time.timeZone = "Europe/Amsterdam";
+  nixpkgs = {
+    config = {
+      allowUnfree = true;
+      packageOverrides = pkgs: {
+        unstable = import (fetchTarball "https://github.com/NixOS/nixpkgs/archive/nixos-unstable.tar.gz") {};
+      };
+    };
+  };
+
+  time.timeZone = vars.timezone;
 
   console.enable = true;
 
@@ -23,10 +34,6 @@
     unitConfig.ConditionPathExists = ["" "/dev/%I"];
   };
   
-  nixpkgs.config = { 
-    allowUnfree = true; 
-  };
-    
   nix.settings = {
     auto-optimise-store = true;
     sandbox = false;
@@ -45,13 +52,6 @@
   
   networking.enableIPv6 = false;
   networking.hostName = "nixsteam";
-    
-  services.desktopManager.plasma6.enable = true;
-  services.xserver.enable = false;
-
-  services.displayManager.enable = true;
-  services.displayManager.sddm.enable = true;
-  services.displayManager.sddm.wayland.enable = true;
     
   users.users.system = {
     isNormalUser = true;

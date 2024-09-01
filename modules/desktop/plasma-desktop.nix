@@ -25,18 +25,24 @@ in
     pkgs.kdePackages.kinfocenter
   ];
 
-#  services.xserver.enable = true;
   services.displayManager.enable = true;
   services.displayManager.sddm = {
     enable = true;
     wayland.enable = true;
+    settings = {
+      Autologin = {
+        Session = "plasma.desktop";
+        User = "system";
+      };
+    };
   };
 
-  services.displayManager.sddm.settings = {
-    Autologin = {
-      Session = "plasma.desktop";
-      User = "system";
-    };
+  hardware.graphics = {
+    enable = true;
+
+    ## amdvlk: an open-source Vulkan driver from AMD
+    extraPackages = [ pkgs.amdvlk ];
+    extraPackages32 = [ pkgs.driversi686Linux.amdvlk ];
   };
 
   environment.systemPackages = with pkgs; [

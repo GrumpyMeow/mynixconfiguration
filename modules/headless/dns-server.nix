@@ -95,6 +95,7 @@ in
           ''"proxmox.${vars.publicDomain}. A ${vars.reverseProxyIP}"''
           ''"frigate.${vars.publicDomain}. A ${vars.reverseProxyIP2}"''
           ''"plex.${vars.publicDomain}. A ${vars.reverseProxyIP2}"''
+          ''"jellyfin.${vars.publicDomain}. A ${vars.reverseProxyIP2}"''
           ''"torrent.${vars.publicDomain}. A ${vars.reverseProxyIP}"''
           ''"mail.${vars.publicDomain}. A ${vars.subnetPrefixIP}.97"''
           ''"opnsense.${vars.publicDomain}. A ${vars.reverseProxyIP}"''
