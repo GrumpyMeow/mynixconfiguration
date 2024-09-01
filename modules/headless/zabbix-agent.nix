@@ -1,36 +1,33 @@
 { config, lib, pkgs, ... }:
 
-with lib;
-
 let
   vars = import ../../vars.nix;
-  unstableTarball =
-    fetchTarball {
-      url = "https://github.com/NixOS/nixpkgs/archive/nixos-unstable.tar.gz";
-    };
-
+  cfg = config.zabbixAgent;
 in
-{  
 
-  nixpkgs.config = {
-    packageOverrides = pkgs: {
-      unstable = import unstableTarball {
-        config = config.nixpkgs.config;
+with lib;
+{ 
+  options = {
+    zabbixAgent = {      
+      hostName = mkOption {
+         default = config.networking.hostName;
+         type = lib.types.str;
       };
     };
-  };
+  }; 
 
-
-  services.zabbixAgent = {
-    enable = true;
-    package = pkgs.unstable.zabbix64.agent2;
-    server = vars.zabbixServerIP;
-    openFirewall = true;
-    settings = {
-      Hostname = "${config.networking.hostName}.${vars.domain}";
-      ServerActive = vars.zabbixServerIP;
-      AllowKey = "system.run[*]";
-      #AllowRoot = 1;
+  config = {
+    services.zabbixAgent = {
+      enable = true;
+      package = pkgs.unstable.zabbix64.agent2;
+      server = vars.zabbixServerIP;
+      openFirewall = true;
+      settings = {
+        Hostname = cfg.hostName;
+        ServerActive = vars.zabbixServerIP;
+        AllowKey = "system.run[*]";
+        #AllowRoot = 1;
+      };
     };
   };
 }

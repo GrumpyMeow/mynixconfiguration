@@ -13,6 +13,8 @@
     ../modules/desktop/printer-scanner.nix
   ];
 
+  zabbixAgent.hostName = "nixsteam.${vars.domain}";
+
   time.timeZone = "Europe/Amsterdam";
 
   console.enable = true;

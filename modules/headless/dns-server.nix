@@ -109,26 +109,26 @@ in
       };
 
       forward-zone = [
-        { 
-          name = ".";
-          forward-addr = [
-             "8.8.8.8"
-             "8.8.4.4"
-             "62.179.104.196"
-             "213.46.228.196"
-          ];
-        }
-        # {
-        #   name = ".";	
-        #   forward-tls-upstream = true;
+        # { 
+        #   name = ".";
         #   forward-addr = [
-        #     "2620:fe::fe@853#quad9.net"
-        #     "2606:4700:4700::1111@853#cloudflare-dns.com"
-        #     "2001:4860:4860::8888@853#dns.google"
-        #     "1.1.1.1@853#cloudflare-dns.com"
-        #     "8.8.8.8@853:dns.google"
+        #      "8.8.8.8"
+        #      "8.8.4.4"
+        #      "62.179.104.196"
+        #      "213.46.228.196"
         #   ];
         # }
+        {
+          name = ".";	
+          forward-tls-upstream = true;
+          forward-addr = [
+            "2620:fe::fe@853#quad9.net"
+            "2606:4700:4700::1111@853#cloudflare-dns.com"
+            "2001:4860:4860::8888@853#dns.google"
+            "1.1.1.1@853#cloudflare-dns.com"
+            "8.8.8.8@853:dns.google"
+          ];
+        }
         {
           name = "onion.";
         }

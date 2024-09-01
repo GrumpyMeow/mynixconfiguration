@@ -1,11 +1,9 @@
 { config, lib, pkgs, ... }:
 
 with lib;
-
 let
-
+  vars = import ../../vars.nix;
 in
-
 {
   services.tailscale = {
     enable = true;
@@ -13,9 +11,21 @@ in
     port = 41641;
     openFirewall = true;
     useRoutingFeatures = "server";
-    extraUpFlags = [ "--advertise-routes=${vars.subnet},192.168.1.0/24" "--advertise-exit-node" "--no-logs-no-support"];
+    extraUpFlags = [       
+    ];
+    extraSetFlags = [
+      "--accept-dns=false"
+      "--advertise-exit-node"
+      "--advertise-routes=${vars.subnet},${vars.upstreamSubnet}"       
+      "--exit-node-allow-lan-access"
+      "--update-check=false"
+      "--webclient=false"
+      "--ssh=false"
+    ];
+    extraDaemonFlags = [
+      "--no-logs-no-support"
+    ];
   };
 
   systemd.services.tailscaled.serviceConfig.LogLevelMax = 4; # https://www.ctrl.blog/entry/systemd-log-levels.html
-
 }

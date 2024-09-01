@@ -3,7 +3,6 @@ let
     vars = import ../vars.nix;
 in
 { 
-
   nix.nixPath = [
     "nixpkgs=/nix/var/nix/profiles/per-user/root/channels/nixos"
     "nixos-config=/root/mynixconfiguration/machines/nixserver.nix"
@@ -15,7 +14,7 @@ in
     <nixpkgs/nixos/modules/virtualisation/proxmox-lxc.nix> 
     ../modules/headless/dhcp-server.nix
     ../modules/headless/dns-server.nix
-    ../modules/headless/zabbix-agent.nix
+    ../modules/headless/zabbix-agent.nix 
     ../modules/headless/mqtt-server.nix
     ../modules/headless/frigate-server.nix
     ../modules/headless/esphome-server.nix
@@ -37,8 +36,9 @@ in
     # ./modules/reverse-proxy.nix
     # ./modules/prometheus-server.nix
     # ./modules/mdns-server.nix
-    
   ];
+
+  zabbixAgent.hostName = "${vars.hostName}.${vars.domain}";  
 
   boot.isContainer = true;
   boot.tmp.useTmpfs = true;
@@ -56,9 +56,8 @@ in
     enable = false;
   };
 
-
   networking = {
-    hostName = vars.hostName;
+    hostName = "${vars.hostName}";
     domain = vars.domain;
     search = [ "lan" ];
     defaultGateway = {
