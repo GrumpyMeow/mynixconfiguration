@@ -17,6 +17,9 @@ in
       ../modules/headless/zabbix-agent.nix
       ../modules/hardware/hp4100-printer.nix    
       ../modules/desktop/printer-scanner.nix
+      ../modules/headless/clamav.nix
+      ../modules/desktop/plasma-desktop.nix
+      ../modules/desktop/webbrowser.nix
     ];
 
   zabbixAgent.hostName = "e6510.${vars.domain}"; 
