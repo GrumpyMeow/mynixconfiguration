@@ -26,7 +26,12 @@ with lib;
         Hostname = cfg.hostName;
         ServerActive = vars.zabbixServerIP;
         AllowKey = "system.run[*]";
+        #LogRemoteCommands = "1";
         #AllowRoot = 1;
+        UserParameter = "WAN.IP.address,curl -s ipinfo.io/ip";
+
+        "Plugins.MQTT.Sessions.mqttlan.Url" = "tcp://mqtt.lan:1883";
+        "Plugins.MQTT.Sessions.mqttlan.Topic" = "$SYS/broker/clients/#";
       };
     };
   };
