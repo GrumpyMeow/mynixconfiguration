@@ -17,6 +17,7 @@ in
       ../modules/headless/zabbix-agent.nix
       ../modules/hardware/hp4100-printer.nix    
       ../modules/desktop/printer-scanner.nix
+      ../modules/desktop/plasma-desktop.nix      
     ];
 
   zabbixAgent.hostName = "e6510.${vars.domain}"; 
@@ -54,13 +55,6 @@ in
     useXkbConfig = true; # use xkbOptions in tty.
   };
 
-  # Enable the X11 windowing system.
-  services.xserver.enable = false;
-  services.displayManager.sddm.enable = true;
-  services.displayManager.sddm.wayland.enable = true;
-  #services.xserver.displayManager.auto.user = "sander";
-  services.desktopManager.plasma6.enable = true;
-  #services.xserver.desktopManager.default = "plasma5";
   services.xserver.videoDrivers = [
     "amdgpu"
     "radeon"
@@ -108,6 +102,13 @@ in
       fdupes
     ];
   };
+
+  services.displayManager.sddm.settings = {
+    Autologin = {
+        User = "sander";
+    };
+  };
+
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget

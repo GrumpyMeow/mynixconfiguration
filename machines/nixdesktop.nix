@@ -5,6 +5,7 @@
 
   imports = [ 
     <nixpkgs/nixos/modules/virtualisation/lxc-container.nix> 
+    ../modules/desktop/plasma-desktop.nix
     /root/mynixconfiguration/modules/headless/code-server.nix
   ];
 
@@ -30,13 +31,6 @@
   
   networking.enableIPv6 = false;
     
-  services.desktopManager.plasma6.enable = true;
-  services.xserver.enable = false;
-
-  services.displayManager.enable = true;
-  services.displayManager.sddm.enable = true;
-  services.displayManager.sddm.wayland.enable = true;
-  
   programs.chromium.enable = true;
   programs.chromium.homepageLocation = "https://933k.nl:8123";
   programs.chromium.extraOpts = { 
@@ -57,16 +51,9 @@
     extraGroups = [ "wheel" ];
     shell = pkgs.bash;
   };
-  
-  services.displayManager.sddm.settings = {
-    Autologin = {
-      Session = "plasma.desktop";
-      User = "system";
-    };
-  };
 
   programs.steam = {
-    enable=true;
+    enable = true;
   }; 
 
   services.pipewire.enable = true;
