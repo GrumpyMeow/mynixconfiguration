@@ -1,13 +1,17 @@
-# Edit this configuration file to define what should be installed on
-# your system.  Help is available in the configuration.nix(5) man page
-# and in the NixOS manual (accessible by running `nixos-help`).
-
 { config, pkgs, ... }:
 
 {
+  nix.nixPath = [
+    "nixpkgs=/nix/var/nix/profiles/per-user/root/channels/nixos"
+    "nixos-config=/home/sander/mynixconfiguration/machines/e6510.nix"
+    "/nix/var/nix/profiles/per-user/root/channels"
+    "/home/sander/.nix-defexpr/channels"
+  ];
+
+
   imports =
-    [ # Include the results of the hardware scan.
-      ./hardware-configuration.nix
+    [ 
+      ./e6510/hardware-configuration.nix
     ];
 
   # Use the GRUB 2 boot loader.
@@ -26,10 +30,6 @@
   # Set your time zone.
   time.timeZone = "Europe/Amsterdam";
 
-  # Configure network proxy if necessary
-  # networking.proxy.default = "http://user:password@proxy:port/";
-  # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
-
   # Select internationalisation properties.
   i18n.defaultLocale = "nl_NL.UTF-8";
   console = {
@@ -40,7 +40,7 @@
 
   # Enable the X11 windowing system.
   services.xserver.enable = true;
-  services.xserver.displayManager.sddm.enable = true;
+  services.displayManager.sddm.enable = true;
   #services.xserver.displayManager.auto.user = "sander";
   services.xserver.desktopManager.plasma5.enable = true;
   #services.xserver.desktopManager.default = "plasma5";
@@ -50,26 +50,25 @@
   ];
 
   # Configure keymap in X11
-  services.xserver.layout = "us";
-  services.xserver.xkbOptions = "eurosign:e,caps:escape";
+  services.xserver.xkb.layout = "us";
+  services.xserver.xkb.options = "eurosign:e,caps:escape";
 
   # Enable CUPS to print documents.
   services.printing.enable = true;
   # Enable autodiscovery of network printers
   services.avahi = {
     enable = true;
-    nssmdns = true;
+    nssmdns4 = true;
     openFirewall = true;
   };
 
   # Todo: Add printer 
 
   # Enable sound.
-  sound.enable = true;
   hardware.pulseaudio.enable = true;
 
   # Enable touchpad support (enabled default in most desktopManager).
-  services.xserver.libinput.enable = true;
+  services.libinput.enable = true;
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.tanya = {
@@ -106,6 +105,7 @@
     kate
     partition-manager
     git
+    gh
     inetutils
 
     libreoffice-qt
