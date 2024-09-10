@@ -20,8 +20,7 @@ with lib;
     services.zabbixAgent = {
       enable = true;
       package = pkgs.unstable.zabbix64.agent2;
-      server = "zabbix.lan,2001:1c00:2615:ce00:be24:11ff:fe6f:d26d,fd3f:f41d:8489:0:be24:11ff:fe6f:d26d,2001:1c00:26
-23:ca00:be24:11ff:fe6f:d26d";
+      server = "zabbix.lan,2001:1c00:2615:ce00:be24:11ff:fe6f:d26d,fd3f:f41d:8489:0:be24:11ff:fe6f:d26d,2001:1c00:2623:ca00:be24:11ff:fe6f:d26d";
       openFirewall = true;
       settings = {
         Hostname = cfg.hostName;
