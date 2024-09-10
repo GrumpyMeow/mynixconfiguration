@@ -22,7 +22,7 @@ in
     pkgs.kdePackages.khelpcenter
     pkgs.kdePackages.kwalletmanager
     pkgs.kdePackages.kwallet
-    #pkgs.kdePackages.kinfocenter
+    pkgs.kdePackages.kinfocenter
   ];
 
   services.displayManager.enable = true;
@@ -66,12 +66,6 @@ in
     #pkgs.gimp
     #pkgs.mqttx
 
-    # Packages needed for Info Center tool
-    pkgs.pciutils
-    pkgs.clinfo
-    pkgs.gpu-viewer
-    pkgs.wayland-utils
   ];  
   
-
 }
