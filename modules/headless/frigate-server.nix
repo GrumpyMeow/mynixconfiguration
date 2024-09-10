@@ -7,13 +7,13 @@ let
 in
 { 
 
-#  systemd.services.frigate = {
-#    environment.LIBVA_DRIVER_NAME = "radeonsi";
-#    serviceConfig = {
-#      SupplementaryGroups = ["render" "video"] ; # for access to dev/dri/
-#      AmbientCapabilities = "CAP_PERFMON";
-#    };
-#  };
+  systemd.services.frigate = {
+    environment.LIBVA_DRIVER_NAME = "radeonsi";
+    serviceConfig = {
+      SupplementaryGroups = ["render" "video"] ; # for access to dev/dri/
+      AmbientCapabilities = "CAP_PERFMON";
+    };
+  };
 
   disabledModules = [ "services/video/frigate.nix" "applications/video/frigate/default.nix"];
 
@@ -55,7 +55,7 @@ in
   fileSystems."/var/cache/frigate" = {
     device = "none";
     fsType = "tmpfs";
-    options = [ "defaults" "size=2G" "mode=755" ];
+    options = [ "defaults" "size=0" "mode=777" "noswap"  ];
   };
 
   systemd.tmpfiles.rules = [
@@ -77,8 +77,8 @@ in
       webrtc.listen = ":8555";
       streams = {
         voortuin = [
-          "rtsp://admin:${vars.myPassword}@${vars.subnetPrefixIP}.78:554/ch01.264?dev=1"
-          "ffmpeg:voortuin#audio=opus"
+          "rtsp://admin:${vars.myPassword}@${vars.subnetPrefixIP}.78:554/ch01.264?dev=1#video=copy"
+          "ffmpeg:voortuin"
         ];
         deurbel = [
           "ffmpeg:http://${vars.subnetPrefixIP}.63/flv?port=1935&app=bcs&stream=channel0_main.bcs&user=admin&password=${vars.myPassword}#video=copy#audio=copy#audio=opus"
@@ -131,7 +131,7 @@ in
         };
       };
 
-      #ffmpeg.hwaccel_args = "preset-vaapi";
+      ffmpeg.hwaccel_args = "preset-vaapi";
       cameras = {
         voortuin = {
           ffmpeg = {

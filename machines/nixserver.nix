@@ -12,8 +12,8 @@ in
 
   imports = [ 
     <nixpkgs/nixos/modules/virtualisation/proxmox-lxc.nix> 
-    ../modules/headless/dhcp-server.nix
-    ../modules/headless/dns-server.nix
+#    ../modules/headless/dhcp-server.nix
+#    ../modules/headless/dns-server.nix
     ../modules/headless/zabbix-agent.nix 
     ../modules/headless/mqtt-server.nix
     ../modules/headless/frigate-server.nix
@@ -69,7 +69,7 @@ in
       enable = true;
       extraConfig = ''
         search_domains_append="lan"
-        prepend_nameservers="192.168.178.1"
+        prepend_nameservers="192.168.1.1"
         name_servers_append="192.168.1.1"
         '';
     };
@@ -78,7 +78,7 @@ in
     extraHosts =
       ''
         ${vars.mqttServerIP} ${vars.mqttServerHostName}.${vars.domain}
-        ${vars.subnetPrefixIP}.2 hub.${vars.domain}
+        ${vars.subnetPrefixIP}.5 hub.${vars.domain}
         ${vars.zabbixServerIP} ${vars.zabbixServerHostName}.${vars.domain}
       '';
 
@@ -144,6 +144,7 @@ in
     pkgs.iperf
     pkgs.nixos-generators
     pkgs.gh
+    pkgs.dig
   ];
 
   documentation.dev.enable = true;

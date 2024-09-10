@@ -8,7 +8,7 @@ in
 {  
    
   environment.sessionVariables = rec {
-    PULSE_SERVER = "tcp:${vars.subnetPrefixIP}.2";
+    PULSE_SERVER = "tcp:hub.lan.5";
   };
   services.pipewire = {
     pulse.enable = true;

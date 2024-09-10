@@ -64,7 +64,7 @@ in
   services.pipewire.enable = true;
 
 #  environment.sessionVariables = rec {
-#    PULSE_SERVER = "tcp:192.168.178.2";
+#    PULSE_SERVER = "tcp:hub.lan";
 #  }; 
   #hardware.pulseaudio.enable = true;
 #  sound.enable = true;

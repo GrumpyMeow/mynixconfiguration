@@ -20,7 +20,7 @@ in
     pkgs.libva-utils
   ];
 
-  hardware.graphics = {
+  hardware.opengl = {
     enable = true;
     driSupport = true;
 
@@ -47,5 +47,12 @@ in
       proxyPass = "http://127.0.0.1:8096";
       proxyWebsockets = true;
     };   
+  };
+
+  # Resolves "Reader cannot keep up" while transcoding live TV
+  fileSystems."/var/cache/jellyfin/transcodes" = {
+    device = "none";
+    fsType = "tmpfs";
+    options = [ "defaults" "size=0" "mode=777" "noswap"  ];
   };
 }
