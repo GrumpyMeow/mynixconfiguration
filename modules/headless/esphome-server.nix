@@ -3,10 +3,6 @@
 with lib;
 
 let
-   unstableTarball =
-    fetchTarball {
-      url = "https://github.com/NixOS/nixpkgs/archive/nixos-unstable.tar.gz";
-    };
   vars = import ../../vars.nix;
 in
 {
@@ -16,15 +12,6 @@ in
       allowedTCPPorts = [ 6052 ];
     };
   };
-
-  nixpkgs.config = {
-    packageOverrides = pkgs: {
-      unstable = import unstableTarball {
-        config = config.nixpkgs.config;
-      };
-    };
-  };
-
   
   services.esphome = {
     enable = true;

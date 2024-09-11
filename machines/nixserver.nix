@@ -10,10 +10,18 @@ in
     "/nix/var/nix/profiles/per-user/root/channels"
   ];
 
+  nixpkgs = {
+    config = {
+      allowUnfree = true;
+      packageOverrides = pkgs: {
+        unstable = import (fetchTarball "https://github.com/NixOS/nixpkgs/archive/nixos-unstable.tar.gz") {};
+      };
+    };
+  };
+
+
   imports = [ 
     <nixpkgs/nixos/modules/virtualisation/proxmox-lxc.nix> 
-#    ../modules/headless/dhcp-server.nix
-#    ../modules/headless/dns-server.nix
     ../modules/headless/zabbix-agent.nix 
     ../modules/headless/mqtt-server.nix
     ../modules/headless/frigate-server.nix
