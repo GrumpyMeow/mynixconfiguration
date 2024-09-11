@@ -19,6 +19,7 @@ in
       ../modules/desktop/printer-scanner.nix
       ../modules/headless/clamav.nix
       ../modules/desktop/plasma-desktop.nix
+      ../modules/desktop/kinfocenter.nix
       ../modules/desktop/webbrowser.nix
     ];
 
@@ -92,7 +93,7 @@ in
 
   users.users.sander = {
     isNormalUser = true;
-    extraGroups = [ "wheel" ];
+    extraGroups = [ "wheel" "audio" "network" "render" ];
     packages = with pkgs; [
       chromium
       remmina
@@ -136,6 +137,8 @@ in
     obs-studio
     blender
     isoimagewriter
+    usbutils
+    dig
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
