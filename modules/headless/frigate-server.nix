@@ -77,12 +77,12 @@ in
       webrtc.listen = ":8555";
       streams = {
         voortuin = [
-          "rtsp://admin:${vars.myPassword}@${vars.subnetPrefixIP}.78:554/ch01.264?dev=1#video=copy"
+          "rtsp://admin:${vars.myPassword}@camvoortuin.lan:554/ch01.264?dev=1#video=copy"
           "ffmpeg:voortuin"
         ];
         deurbel = [
-          "ffmpeg:http://${vars.subnetPrefixIP}.63/flv?port=1935&app=bcs&stream=channel0_main.bcs&user=admin&password=${vars.myPassword}#video=copy#audio=copy#audio=opus"
-          "rtsp://${vars.subnetPrefixIP}.63/Preview_01_sub"
+          "ffmpeg:http://deurbel.lan/flv?port=1935&app=bcs&stream=channel0_main.bcs&user=admin&password=${vars.myPassword}#video=copy#audio=copy#audio=opus"
+          "rtsp://deurbel.lan/Preview_01_sub"
         ];
       };
       ffmpeg = {
@@ -118,12 +118,12 @@ in
       go2rtc = {
         streams = {
           voortuin = [
-            "rtsp://admin:${vars.myPassword}@${vars.subnetPrefixIP}.78:554/ch01.264?dev=1"
+            "rtsp://admin:${vars.myPassword}@camvoortuin.lan:554/ch01.264?dev=1"
             "ffmpeg:voortuin#audio=opus"
           ];
           deurbel = [
-            "ffmpeg:http://${vars.subnetPrefixIP}.63/flv?port=1935&app=bcs&stream=channel0_main.bcs&user=admin&password=${vars.myPassword}#video=copy#audio=copy#audio=opus"
-            "rtsp://${vars.subnetPrefixIP}.63/Preview_01_sub"
+            "ffmpeg:http://deurbel.lan/flv?port=1935&app=bcs&stream=channel0_main.bcs&user=admin&password=${vars.myPassword}#video=copy#audio=copy#audio=opus"
+            "rtsp://deurbel.lan/Preview_01_sub"
           ];
         };
         ffmpeg = {
