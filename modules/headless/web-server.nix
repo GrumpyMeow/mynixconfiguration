@@ -141,14 +141,14 @@ in
     forceSSL = true;
     extraConfig = ''
       proxy_buffering off;
-    '';        
+    '';
     locations."/" = {
-      #proxyPass = "http://homeassistant.lan:8123/";
-      proxyPass = "http://192.168.1.9:8123/";
+      proxyPass = "http://homeassistant.lan:8123/";
+      #proxyPass = "http://192.168.1.9:8123/";
       proxyWebsockets = true;
+      recommendedProxySettings = true;
       extraConfig = ''
-         proxy_set_header Upgrade $http_upgrade;
-         proxy_set_header Connection $connection_upgrade;
+         proxy_set_header Origin "";
       '';
     };   
   };

@@ -19,7 +19,7 @@ with lib;
   config = {
     services.zabbixAgent = {
       enable = true;
-      package = pkgs.unstable.zabbix64.agent2;
+      package = pkgs.unstable.zabbix70.agent2;
       server = "zabbix.lan,2001:1c00:2615:ce00::10";
       openFirewall = true;
       settings = {
