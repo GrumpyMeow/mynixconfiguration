@@ -34,17 +34,11 @@ in
     ../modules/headless/tailscale.nix
     ../modules/headless/ebusd.nix
     ../modules/headless/zigbee2mqtt.nix
-    ../modules/headless/ntp-server.nix
     ../modules/headless/jellyfin-server.nix
-    # ../modules/headless/crowdsec.nix
     #../modules/headless/rtlsdr.nix    
-    #./modules/headless/ntopng-server.nix
     #./modules/headless/mail-server.nix
     #./modules/headless/mqtt-explorer.nix
     # ./modules/paperless-server.nix    
-    # ./modules/reverse-proxy.nix
-    # ./modules/prometheus-server.nix
-    # ./modules/mdns-server.nix
   ];
 
   zabbixAgent.hostName = "${vars.hostName}.${vars.domain}";  

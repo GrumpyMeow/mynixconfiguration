@@ -172,9 +172,6 @@ in
         "0x804b50fffe4468e4" = {
           friendly_name = "Verwarming slaapkamer Zoe";
         };
-        "0xbc33acfffe15a97b" = {
-          friendly_name = "Woonkamerlampen bediening";
-        };
         "0xa4c1385eb99af5db" = {
           friendly_name = "Openslaande deur";
         };
@@ -194,6 +191,15 @@ in
         };
         "0xa4c13824bf33290a" = {
           friendly_name = "Alarm knop 2";
+        };
+        "0xa4c138e6025f3023" = {
+          friendly_name = "Rookmelder overloop";
+        };
+        "0x54ef441000b28444" = {
+          friendly_name = "Werkplek Sander bediening";
+        };
+        "0x54ef441000b28f90" = {
+          friendly_name = "Woonkamer bediening";
         };
       };
       groups = {
