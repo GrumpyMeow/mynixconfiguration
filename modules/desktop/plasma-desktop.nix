@@ -25,6 +25,17 @@ in
     pkgs.kdePackages.kinfocenter
   ];
 
+  networking.networkmanager.enable = false;
+
+  users.users.system = {
+    isNormalUser = true;
+    home = "/home/system";
+    description = "System user";
+    extraGroups = [ "wheel" "networkmanager" ];
+    shell = pkgs.bash;
+    initialPassword = "Passw0rd!";
+  };
+
   services.displayManager.enable = true;
   services.displayManager.sddm = {
     enable = true;

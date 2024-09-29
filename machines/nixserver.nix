@@ -39,19 +39,18 @@ in
     #./modules/headless/mail-server.nix
     #./modules/headless/mqtt-explorer.nix
     # ./modules/paperless-server.nix    
+    ../modules/headless/generic.nix
   ];
 
   zabbixAgent.hostName = "${vars.hostName}.${vars.domain}";  
 
   boot.isContainer = true;
-  boot.tmp.useTmpfs = true;
+  #boot.tmp.useTmpfs = true; # Disabled Tmpfs to allow for nixos-generate to build images to disk and not memory (oom)
 
   console.enable = true;
   systemd.services."getty@" = {
     unitConfig.ConditionPathExists = ["" "/dev/%I"];
   };
-
-  time.timeZone = vars.timezone;
 
   boot.kernel.sysctl."net.ipv6.conf.eth0.disable_ipv6" = true;
 
@@ -110,13 +109,6 @@ in
     networkmanager.enable = false;
   };
 
-  services.openssh.settings = {
-    PermitRootLogin = "yes";
-    PermitEmptyPasswords = "yes";
-    PasswordAuthentication = true;
-  };
-
-  security.pam.services.sshd.allowNullPassword = true;
   programs.nix-ld.enable = true;
 
   # Reduces writes onto disk
@@ -125,33 +117,11 @@ in
     extraConfig = "SystemMaxUse=100M";
   };
 
-  nix.settings.auto-optimise-store = true;
-  
-  system.autoUpgrade = {
-    enable = true;
-    allowReboot = false;
-  };
-
-  nix.gc = {
-    automatic = true;
-    dates = "daily";
-    options = "--delete-older-than 1d";
-  };
-
   environment.systemPackages = with pkgs; [
-    pkgs.git
-    pkgs.nano 
-    pkgs.wget
-    pkgs.man pkgs.man-pages pkgs.man-pages-posix
-    pkgs.fatrace pkgs.iotop pkgs.inotify-tools
+    pkgs.fatrace pkgs.iotop pkgs.inotify-tools pkgs.atop
     pkgs.iperf
     pkgs.nixos-generators
-    pkgs.gh
-    pkgs.dig
   ];
-
-  documentation.dev.enable = true;
-  documentation.man.enable = true;
 
   system.stateVersion = "24.05";
 }

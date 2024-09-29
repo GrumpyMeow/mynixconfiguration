@@ -6,6 +6,7 @@
   imports = [ 
     <nixpkgs/nixos/modules/virtualisation/lxc-container.nix> 
     ../modules/desktop/plasma-desktop.nix
+    ../modules/desktop/webbrowser.nix
     /root/mynixconfiguration/modules/headless/code-server.nix
   ];
 
@@ -15,43 +16,12 @@
     unitConfig.ConditionPathExists = ["" "/dev/%I"];
   };
   
-  nixpkgs.config = { 
-    allowUnfree = true; 
-  };
-    
   nix.settings = {
-    auto-optimise-store = true;
     sandbox = false;
   };
   
-  system.autoUpgrade= {
-    enable = true;
-    allowReboot = true;
-  };
-  
   networking.enableIPv6 = false;
-    
-  programs.chromium.enable = true;
-  programs.chromium.homepageLocation = "https://933k.nl:8123";
-  programs.chromium.extraOpts = { 
-    "BrowserSignin" = 0;
-    "SyncDisabled" = true;
-    "PasswordManagerEnabled" = false;
-    "SpellcheckEnabled" = true;
-    "SpellcheckLanguage" = [
-      "nl"
-      "en-US"
-    ];
-  };
-  
-  users.users.system = {
-    isNormalUser = true;
-    home = "/home/system";
-    description = "System user";
-    extraGroups = [ "wheel" ];
-    shell = pkgs.bash;
-  };
-
+      
   programs.steam = {
     enable = true;
   }; 
@@ -88,12 +58,10 @@
   };
    
   environment.systemPackages = with pkgs; [
-    pkgs.chromium
+    #pkgs.chromium
     pkgs.vscode
     pkgs.trilium-desktop
     pkgs.bitwarden
-    pkgs.git
-    pkgs.gh
   ];  
   
   system.stateVersion = "24.05";

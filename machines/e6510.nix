@@ -21,6 +21,7 @@ in
       ../modules/desktop/plasma-desktop.nix
       ../modules/desktop/kinfocenter.nix
       ../modules/desktop/webbrowser.nix
+      ../modules/headless/generic.nix
     ];
 
   zabbixAgent.hostName = "e6510.${vars.domain}"; 
@@ -44,14 +45,8 @@ in
 
   networking.hostName = "e6510"; # Define your hostname.
   # Pick only one of the below networking options.
-  #networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
-  networking.networkmanager.enable = true;  # Easiest to use and most distros use this by default.
+  networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
-  # Set your time zone.
-  time.timeZone = vars.timezone;
-
-  # Select internationalisation properties.
-  i18n.defaultLocale = "nl_NL.UTF-8";
   console = {
     font = "Lat2-Terminus16";
     #keyMap = "us";
@@ -82,22 +77,17 @@ in
   # Enable touchpad support (enabled default in most desktopManager).
   services.libinput.enable = true;
 
-  # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.tanya = {
     isNormalUser = true;
     extraGroups = [ "wheel" ];
-    packages = with pkgs; [
-      chromium
-    ];
   };
 
   users.users.sander = {
     isNormalUser = true;
     extraGroups = [ "wheel" "audio" "network" "render" ];
     packages = with pkgs; [
-      chromium
+      # chromium
       remmina
-      git
       partition-manager
       kate
       trilium-desktop
@@ -106,19 +96,11 @@ in
     ];
   };
 
-  # List packages installed in system profile. To search, run:
-  # $ nix search wget
   environment.systemPackages = with pkgs; [
-    vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
-    wget
-    chromium
     remmina
     thunderbird
     kate
     partition-manager
-    git
-    gh
-    inetutils
 
     libreoffice-qt
     hunspell
@@ -138,7 +120,6 @@ in
     blender
     isoimagewriter
     usbutils
-    dig
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
@@ -151,52 +132,17 @@ in
 
   # List services that you want to enable:
 
-  # Enable the OpenSSH daemon.
-  # services.openssh.enable = true;
-
-  # Open ports in the firewall.
-  # networking.firewall.allowedTCPPorts = [ ... ];
-  # networking.firewall.allowedUDPPorts = [ ... ];
-  # Or disable the firewall altogether.
-  # networking.firewall.enable = false;
-
   # Copy the NixOS configuration file and link it from the resulting system
   # (/run/current-system/configuration.nix). This is useful in case you
   # accidentally delete configuration.nix.
   # system.copySystemConfiguration = true;
 
-  programs.chromium = {
+  hardware.bluetooth = {
     enable = true;
-    homepageLocation = "https://933k.nl:8123";
-    defaultSearchProviderEnabled = true;
-    defaultSearchProviderSearchURL = "https://www.google.nl";
-    extensions = [
-       "nngceckbapebfimnlniiiahkandclblb" # bitwarden
-    ];
-    extraOpts = {
-      BrowserSignin = 0;
-      SyncDisabled = true;
-      PasswordManagerEnabled = false;
-      SpellcheckEnabled = true;
-      SpellcheckLanguage = [
-        "nl-NL"
-      ];
-    };
-  };
+    powerOnBoot = false;
+  }
 
-#  nixpkgs.config.allowUnfree = true;
-
-  hardware.bluetooth.enable = true;
-  hardware.bluetooth.powerOnBoot = false;
-
-
-  # This value determines the NixOS release from which the default
-  # settings for stateful data, like file locations and database versions
-  # on your system were taken. It's perfectly fine and recommended to leave
-  # this value at the release version of the first install of this system.
-  # Before changing this value read the documentation for this option
-  # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
-  system.stateVersion = "23.05"; # Did you read the comment?
+  system.stateVersion = "23.05";
 
 }
 
