@@ -3,18 +3,51 @@
 with lib;
 
 let
+  unstableTarball =
+    fetchTarball {
+      url = "https://github.com/NixOS/nixpkgs/archive/nixos-unstable.tar.gz";
+    };
+
   vars = import ../../vars.nix;
 in
-{  
-   services = {
+{ 
+   nixpkgs.config = {
+    packageOverrides = pkgs: {
+      unstable = import unstableTarball {
+        config = config.nixpkgs.config;
+      };
+    };
+   }; 
 
-    # avahi = {
-    #   enable = true;
-    #   nssmdns4 = true;
-    # };
+   networking.firewall.allowedUDPPorts = [
+     5353 # mDNS
+     427 # Service Location Protocol (SLP)
+     631
+   ];
+
+   networking.firewall.allowedTCPPorts = [
+     631
+   ];
+
+   environment.systemPackages = [
+    pkgs.hplip
+    pkgs.cups-printers
+   ];
+
+   services = {
+    avahi = {
+      enable = true;
+      nssmdns4 = true;
+      nssmdns6 = true;
+      openFirewall = true;
+      ipv6 = true;
+      ipv4 = true;
+      #domainName = "local";
+    };  
 
     printing = {
       enable = true;
+      startWhenNeeded = false;
       drivers = [ pkgs.hplipWithPlugin ]; 
       logLevel = "debug";
       cups-pdf.enable = true;
@@ -23,10 +56,8 @@ in
   };
 
   hardware = {
-
     printers = {
-
-      ensurePrinters = [
+     ensurePrinters = [
         {
           name = "hp4100e";
           location = "Home";
@@ -42,7 +73,6 @@ in
           };
         }
       ];
-
       ensureDefaultPrinter = "hp4100e";
     };
   
@@ -54,3 +84,4 @@ in
   };
 
 }
+# NIXPKGS_ALLOW_UNFREE=1 nix-shell -p hplipWithPlugin --run 'sudo -E hp-setup'
