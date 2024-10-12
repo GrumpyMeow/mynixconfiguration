@@ -6,6 +6,21 @@ let
   vars = import ../../vars.nix;
 in
 {     
+
+  # programs.chromium.enable = true;
+  # programs.chromium.homepageLocation = "https://933k.nl:8123";
+  # programs.chromium.extraOpts = { 
+  #   "BrowserSignin" = 0;
+  #   "SyncDisabled" = true;
+  #   "PasswordManagerEnabled" = false;
+  #   "SpellcheckEnabled" = true;
+  #   "SpellcheckLanguage" = [
+  #     "nl"
+  #     "en-US"
+  #   ];
+  # };
+
+
   programs.chromium = {
     enable = true;
     homepageLocation = "https://${vars.publicDomain}:8123";
@@ -39,6 +54,26 @@ in
     ];
     enablePlasmaBrowserIntegration = true;
   };
+
+    # programs.chromium = {
+  #   enable = true;
+  #   homepageLocation = "https://933k.nl:8123";
+  #   defaultSearchProviderEnabled = true;
+  #   defaultSearchProviderSearchURL = "https://www.google.nl";
+  #   extensions = [
+  #      "nngceckbapebfimnlniiiahkandclblb" # bitwarden
+  #   ];
+  #   extraOpts = {
+  #     BrowserSignin = 0;
+  #     SyncDisabled = true;
+  #     PasswordManagerEnabled = false;
+  #     SpellcheckEnabled = true;
+  #     SpellcheckLanguage = [
+  #       "nl-NL"
+  #     ];
+  #   };
+  # };
+
 
   environment.systemPackages = with pkgs; [
     pkgs.chromium

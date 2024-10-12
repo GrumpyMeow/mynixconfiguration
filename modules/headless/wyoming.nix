@@ -23,7 +23,6 @@ in
   networking = {
     hostName = "wyomingsatellite";
     enableIPv6 = false;
-    networkmanager.enable = false;
     firewall = {
       enable = true;
       allowedTCPPorts = [ 10400 10700 ];

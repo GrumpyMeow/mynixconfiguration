@@ -16,6 +16,7 @@ in
 #    ../modules/desktop/discord.nix
 #    ../modules/desktop/printer-scanner.nix
 #    ../modules/desktop/pipewire.nix
+    ../modules/headless/generic.nix
   ];
 
   boot.isContainer = true;
@@ -26,39 +27,9 @@ in
     unitConfig.ConditionPathExists = ["" "/dev/%I"];
   };
 
-  time.timeZone = vars.timezone;
-
-  documentation = {
-    enable = true;
-    man.enable = true;
-    dev.enable = true;
-  };
-
   nix.settings = {
-    auto-optimise-store = true;
     sandbox = false;
-    experimental-features = [ "nix-command" "flakes" ];
   };
-
-  nixpkgs.config = { 
-    allowUnfree = true; 
-  };
-
-#  hardware.bluetooth.enable = true;
-
-#  services.qbittorrent = {
-#    enable = true;
-#    openFirewall = true;
-#    port = 58080;
-#    user = "media";
-#    group = "media";
-#  };
-#  users.users.media = {
-#    group = "media";
-#    isSystemUser = true;
-#    uid = 1001;
-#  };
-#  users.groups.media = { gid = 1001; };
   
   services.power-profiles-daemon.enable = false;
   powerManagement.enable = false;
@@ -75,7 +46,6 @@ in
 #    };
 #    hostName = "nixdesktop";
 #    enableIPv6 = false;
-#    networkmanager.enable = true;
 #    firewall = {
 #      enable = true;
 #      allowedTCPPorts = [ ];
@@ -84,24 +54,6 @@ in
 #    };
 #  };
 
-  i18n = {
-    defaultLocale = "nl_NL.UTF-8";
-    extraLocaleSettings = {
-      LC_ADDRESS = "nl_NL.UTF-8";
-      LC_IDENTIFICATION = "nl_NL.UTF-8";
-      LC_MEASUREMENT = "nl_NL.UTF-8";
-      LC_MONETARY = "nl_NL.UTF-8";
-      LC_NAME = "nl_NL.UTF-8";
-      LC_NUMERIC = "nl_NL.UTF-8";
-      LC_PAPER = "nl_NL.UTF-8";
-      LC_TELEPHONE = "nl_NL.UTF-8";
-      LC_TIME = "nl_NL.UTF-8";
-      LC_COLLATE = "nl_NL.UTF-8";
-      LC_MESSAGES = "nl_NL.UTF-8";
-      LC_CTYPE = "nl_NL.UTF-8";
-      LC_ALL = "nl_NL.UTF-8";
-    };
-  };
 
 #  services.clamav = {
 #    daemon.enable = true;
@@ -122,12 +74,9 @@ in
   };
   systemd.services.modem-manager.enable = false;
   systemd.services."dbus-org.freedesktop.ModemManager1".enable = false;
-  
-  #programs.bash.completion.enable = true;
 
   users.defaultUserShell = pkgs.bash;
 
-  security.sudo.wheelNeedsPassword = false;
   users.users.system = {
     isNormalUser = true;
     home = "/home/system";
@@ -135,23 +84,12 @@ in
     extraGroups = [ 
       "wheel" 
       "audio"
-      "networkmanager"
       "scanner"
       "lp"
       "render"
     ];
     shell = pkgs.bash;
   };
-
-  environment.systemPackages = with pkgs; [
-    pkgs.wget
-    pkgs.dig # NSLookup etc.
-    pkgs.nmap
-    pkgs.traceroute
-    pkgs.inetutils
-    pkgs.git
-    pkgs.gh
-  ];  
 
   system.stateVersion = "24.05";
 }

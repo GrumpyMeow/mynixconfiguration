@@ -13,6 +13,7 @@ in
     ../modules/desktop/iptv.nix
     ../modules/hardware/hp4100-printer.nix    
     ../modules/desktop/printer-scanner.nix
+    ../modules/headless/generic.nix
   ];
 
   zabbixAgent.hostName = "nixsteam.${vars.domain}";
@@ -26,8 +27,6 @@ in
     };
   };
 
-  time.timeZone = vars.timezone;
-
   console.enable = true;
 
   systemd.services."getty@" = {
@@ -35,7 +34,6 @@ in
   };
   
   nix.settings = {
-    auto-optimise-store = true;
     sandbox = false;
   };
 
@@ -44,23 +42,10 @@ in
     "nixos-config=/home/system/mynixconfiguration/machines/nixsteam.nix"
     "/nix/var/nix/profiles/per-user/root/channels"
   ];
-  
-  system.autoUpgrade= {
-    enable = true;
-    allowReboot = true;
-  };
-  
+    
   networking.enableIPv6 = false;
   networking.hostName = "nixsteam";
-    
-  users.users.system = {
-    isNormalUser = true;
-    home = "/home/system";
-    description = "System user";
-    extraGroups = [ "wheel" ];
-    shell = pkgs.bash;
-  };
-  
+      
   services.pipewire.enable = true;
 
 #  environment.sessionVariables = rec {
