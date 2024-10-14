@@ -80,7 +80,7 @@ in
    
   environment.systemPackages = with pkgs; [
     pkgs.git
-    pkgs.gh
+    pkgs.gh    
   ];  
 
   system.stateVersion = "24.11";

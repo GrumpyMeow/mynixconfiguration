@@ -36,7 +36,7 @@ in
     ../modules/headless/zigbee2mqtt.nix
     ../modules/headless/jellyfin-server.nix
     #../modules/headless/rtlsdr.nix    
-    #./modules/headless/mail-server.nix
+    ../modules/headless/mail-server.nix
     #./modules/headless/mqtt-explorer.nix
     # ./modules/paperless-server.nix    
     ../modules/headless/generic.nix

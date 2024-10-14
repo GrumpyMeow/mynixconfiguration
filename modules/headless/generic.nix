@@ -42,6 +42,8 @@ in
 
   security.pam.services.sshd.allowNullPassword = true;
 
+  users.users.root.hashedPassword = "";
+
   # Enable ssh
   services.openssh = {
     enable = true;
