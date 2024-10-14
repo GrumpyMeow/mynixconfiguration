@@ -61,7 +61,7 @@ in
 
 
 #  powerManagement.enable = lib.mkForce false;
-#  services.accounts-daemon.enable = lib.mkForce false;
+  services.accounts-daemon.enable = lib.mkForce false;
 #  systemd.services.powerdevil = {
 #    wantedBy = lib.mkForce [];
 #    enable = false;
